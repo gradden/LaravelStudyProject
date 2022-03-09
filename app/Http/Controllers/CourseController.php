@@ -44,7 +44,11 @@ class CourseController extends Controller
      */
     public function show($id)
     {
-        return response()->json(CourseResource::make(Course::find($id)), Response::HTTP_OK);
+        if(Course::find($id)){
+            return response()->json(CourseResource::make(Course::find($id)), Response::HTTP_OK);
+        }else{
+            return "Not found";
+        }
     }
 
     /**
@@ -55,7 +59,6 @@ class CourseController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-     //HÁZI:D
     public function update(Request $request, $id)
     {
         //
