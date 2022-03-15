@@ -25,7 +25,7 @@ class CourseRequest extends FormRequest
     {
         //Laravel validáció szabályok
         return [
-            'title' => 'required|string|min:1',
+            'title' => 'required|string|min:3|max:255',
             'description' => 'required|string|min:1',
             'author' => 'required|string|min:1',
             'url' => 'url',
