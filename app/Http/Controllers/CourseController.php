@@ -59,9 +59,22 @@ class CourseController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function update(Request $request, $id)
+    public function update(CourseRequest $request, Course $course)
     {
-        //
+        $data = $request->only([
+            'title',
+            'description',
+            'author',
+            'url'
+        ]);
+
+        $course->title = $data['title'];
+        $course->description = $data['description'];
+        $course->author = $data['author'];
+        $course->url = $data['url'] ?? null;
+        $course->save();
+
+        return response()->json(CourseResoure::make($course), Response::HTTP_OK);
     }
 
     /**
@@ -70,8 +83,14 @@ class CourseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Course $course)
     {
-        //
+        //$course = Course::findOrFail($id);
+
+        $course->delete();
+
+        //VAGY
+        //$courseDestroy = Course::destroy($id);
+        return response()->json(null, Response::HTTP_NO_CONTENT);
     }
 }
