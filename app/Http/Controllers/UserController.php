@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Http\Requests\UserRequest;
+use App\Http\Requests\LoginRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -15,9 +17,17 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function login(LoginRequest $request)
     {
-        //
+        $user = User::where('email', '=', $request->email)->firstOrFail();
+        //$isValid = Hash::check($request->password, $user->password);
+
+        if(!Hash::check($request->password, $user->password)){
+            return response()->json('Not permitted.');
+        }
+        $token = $user->createToken('accessToken');
+        return response()->json(['accessToken' => $token->plainTextToken]);
+
     }
 
     /**
@@ -28,7 +38,9 @@ class UserController extends Controller
      */
     public function store(UserRequest $request)
     {
-        $user = User::create($request->all());
+        $data = $request->only(['name', 'email', 'password']);
+        $data['password'] = Hash::make($data['password']);
+        $user = User::create($data);
         return response()->json(UserResource::make($user), Response::HTTP_CREATED);
     }
 

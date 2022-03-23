@@ -23,4 +23,5 @@ Route::delete('/courses/{course}', [CourseController::class, 'destroy']);
 Route::put('/courses/{course}', [CourseController::class, 'update']);
 
 Route::post('/users/registration', [UserController::class, 'store']);
+Route::post('/auth/login', [UserController::class, 'login']);
 
