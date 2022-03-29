@@ -13,24 +13,6 @@ use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function login(LoginRequest $request)
-    {
-        $user = User::where('email', '=', $request->email)->firstOrFail();
-        //$isValid = Hash::check($request->password, $user->password);
-
-        if(!Hash::check($request->password, $user->password)){
-            return response()->json('Not permitted.');
-        }
-        $token = $user->createToken('accessToken');
-        return response()->json(['accessToken' => $token->plainTextToken]);
-
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
