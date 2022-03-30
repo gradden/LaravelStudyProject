@@ -10,6 +10,7 @@ use App\Http\Requests\LoginRequest;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Hash;
 use PHPOpenSourceSaver\JWTAuth\Providers\Auth\Illuminate;
+use Auth;
 
 class AuthController extends Controller
 {
@@ -29,7 +30,7 @@ class AuthController extends Controller
         }
 
         //$token = $user->createToken('accessToken');
-        $token = auth()->login($user);
+        $token = $this->guard()->login($user);
         return response()->json(['accessToken' => $token]);
     }
 
@@ -45,7 +46,7 @@ class AuthController extends Controller
      */
     public function logout()
     {
-        $this->guard()->logout();
+        $this->guard('user')->logout();
 
         return response()->json(['message' => 'Successfully logged out']);
     }

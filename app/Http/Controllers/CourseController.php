@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Course;
 use App\Http\Resources\CourseResource;
 use App\Http\Requests\CourseRequest;
+use App\Http\Requests\AddUsersToCourseRequest;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -75,6 +76,11 @@ class CourseController extends Controller
         $course->save();
 
         return response()->json(CourseResoure::make($course), Response::HTTP_OK);
+    }
+
+    public function addUsers(AddUsersToCourseRequest $request, Course $course){
+        $users = $request->users;
+        $course->students()->sync($users);
     }
 
     /**
