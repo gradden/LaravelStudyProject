@@ -43,6 +43,25 @@ class User extends Authenticatable implements JWTSubject
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * Get all of the comments for the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function courses(): HasMany
+    {
+        return $this->hasMany(Course::class, 'author_id', 'id');
+    }
+
+    public function assignedCourses(){
+        return $this->belongsToMany(
+            Course::class,
+            'course_users',
+            'user_id',
+            'course_id'
+        );
+    }
+
     public function getJWTIdentifier()
     {
         return $this->getKey();

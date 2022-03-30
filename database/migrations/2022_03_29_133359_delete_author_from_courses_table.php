@@ -14,6 +14,19 @@ return new class extends Migration
     public function up()
     {
         Schema::table('courses', function (Blueprint $table) {
+
+            //Még mielőtt letörölnénk, az adatokat az oszlopból áthelyezzük máshova
+            /*
+            $courses = Course::all();
+            foreach($courses as $course){
+                $userId = User::where('email', '=', $course->$author)->first();
+                if(!empty($user)){
+                    $course->author_id = $user->id;
+                    $course->save();
+                }
+            }
+            */
+
             $table->dropColumn('author');
         });
     }

@@ -24,5 +24,17 @@ Route::delete('/courses/{course}', [CourseController::class, 'destroy']);
 Route::put('/courses/{course}', [CourseController::class, 'update']);
 
 Route::post('/users/registration', [UserController::class, 'store']);
-Route::post('/auth/login', [AuthController::class, 'login']);
+//Route::post('/auth/login', [AuthController::class, 'login']);
+
+Route::group([
+    'prefix' => 'auth'
+], function ($router) {
+    Route::post('login', [AuthController::class, 'login']);
+    Route::post('logout', [AuthController::class, 'logout']);
+    Route::post('refresh', [AuthController::class, 'refresh']);
+    Route::post('me', [AuthController::class, 'me']);
+});
+
+
+Route::put('/users/{user}', [UserController::class, 'update']);
 

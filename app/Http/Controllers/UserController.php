@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Http\Requests\UserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Http\Requests\LoginRequest;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Hash;
@@ -44,9 +45,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateUserRequest $request, User $user)
     {
-        //
+        $courses = $request->courses;
+        $user->assignedCourses()->sync($courses);
     }
 
     /**

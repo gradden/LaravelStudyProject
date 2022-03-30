@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\AuthorResource;
 
 class UserResource extends JsonResource
 {
@@ -17,7 +18,8 @@ class UserResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'password' => $this->password
+            'password' => $this->password,
+            'ownCourses' => CourseResource::collection($this->courses),
         ];
     }
 }
