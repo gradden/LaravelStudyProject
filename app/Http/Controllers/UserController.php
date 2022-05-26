@@ -49,6 +49,7 @@ class UserController extends Controller
     {
         $courses = $request->courses;
         $user->assignedCourses()->sync($courses);
+
     }
 
     /**

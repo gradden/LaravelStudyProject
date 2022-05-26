@@ -19,7 +19,8 @@ use Illuminate\Support\Facades\Route;
 */
 Route::group([
     'prefix' => 'courses',
-    'middleware' => 'auth'
+    'middleware' => 'auth',
+    'role' => 'admin'
 ], function ($router) {
     Route::get('', [CourseController::class, 'index']);
     Route::get('{id}', [CourseController::class, 'show']);

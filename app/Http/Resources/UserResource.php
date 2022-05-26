@@ -20,6 +20,8 @@ class UserResource extends JsonResource
             'name' => $this->name,
             'password' => $this->password,
             'ownCourses' => CourseResource::collection($this->courses),
+            'role' => 'admin',
+            //'role' => $this->getRoleNames()
         ];
     }
 }
